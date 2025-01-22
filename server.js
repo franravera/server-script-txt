@@ -41,23 +41,23 @@ function cleanFile(filePath) {
 // Monitorear cambios en el archivo
 fs.watch(filePath, (eventType) => {
   if (eventType === 'change') {
-    // console.log(`Detectado cambio en el archivo: ${filePath}`);
+    console.log(`Detectado cambio en el archivo: ${filePath}`);
     const lastLine = getLastLine(filePath);
     if (lastLine) {
       lastLineGlobal = lastLine; // Actualizamos la variable global
-      console.log(`Última línea leída automáticamente: "${lastLine}"`);
+      // console.log(`Última línea leída automáticamente: "${lastLine}"`);
     }
   }
 });
 
 // Leer el último valor periódicamente (en caso de que `fs.watch` falle)
-// setInterval(() => {
-//   const lastLine = getLastLine(filePath);
-//   if (lastLine && lastLine !== lastLineGlobal) {
-//     lastLineGlobal = lastLine;
-//     // console.log(`Última línea leída periódicamente: "${lastLine}"`);
-//   }
-// }, 6000); // Cada 5 segundos
+setInterval(() => {
+  const lastLine = getLastLine(filePath);
+  if (lastLine && lastLine !== lastLineGlobal) {
+    lastLineGlobal = lastLine;
+    // console.log(`Última línea leída periódicamente: "${lastLine}"`);
+  }
+}, 6000); // Cada 5 segundos
 
 // Limpieza automática del archivo cada 30 segundos
 setInterval(() => {
